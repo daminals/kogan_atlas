@@ -1,2 +1,4 @@
 venv
 .history
+atlas_fbkey.json
+.env

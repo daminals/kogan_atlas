@@ -3,14 +3,39 @@
 # 12.30.2021
 
 from datetime import datetime
-import hashlib, json
+import hashlib, json, os
+from dotenv import load_dotenv
+load_dotenv()
+
+import firebase_admin
+from firebase_admin import credentials, db
+
+FIREBASE = os.environ.get('FIREBASE', 3)
+cred = credentials.Certificate("atlas_fbkey.json")
+firebase_admin.initialize_app(cred, {
+    'databaseURL': FIREBASE
+})
+global_chain = db.reference('/')
 
 class Blockchain:
     difficulty = 4
     
-    def __init__(self):
+    def __init__(self, global_chain=None):
         self.unconfirmed_data = []
-        self.chain = [Block.genesis_block()]
+        if global_chain:
+            self.chain = self.convert_firebase_to_chain(global_chain)
+        else:
+            self.chain = [Block.genesis_block()]
+        
+    def convert_firebase_to_chain(self, global_chain):
+        pure_block_data = list(global_chain.get())
+        chain = []
+        for i in pure_block_data:
+            chain.append(self.convert_dict_to_block(i))
+        return chain
+        
+    def convert_dict_to_block(self, bdata):
+        return Block(int(bdata['index']), bdata['timestamp'], bdata['data'], bdata['prev_hash'], bdata['nonce'], bdata['hash'])
         
     def proof_of_work(self, block):
         while not block.hash.startswith('0'* Blockchain.difficulty):
@@ -54,18 +79,32 @@ class Blockchain:
             i.print()
             print('\n')
     
+    def to_json(self):
+        blockchain_dict = {}
+        for block in self.chain:
+            blockchain_dict[block.index] = block.data_dict()
+        self.writeJSON(blockchain_dict, 'out.json')
+    
+    def writeJSON(self, json_data, filename):
+        with open(filename, 'w') as outfile:
+            json.dump(json_data, outfile, indent=4,sort_keys=True)
+        return True
+
     @property
     def last_block(self):
         return self.chain[-1]
     
 class Block:
-    def __init__(self, index, timestamp, data, prev_hash, nonce=0):
+    def __init__(self, index, timestamp, data, prev_hash, nonce=0, hash=None):
         self.index = index
         self.timestamp = timestamp
         self.data = data
         self.prev_hash = prev_hash
         self.nonce = nonce
-        self.hash = self.hash_block()
+        if hash:
+            self.hash = hash
+        else:
+            self.hash = self.hash_block()
     
     def hash_block(self):
         protected_data = json.dumps({'index': str(self.index), 'timestamp': str(self.timestamp), 'data': str(self.data), 'prev_hash': str(self.prev_hash), 'nonce': str(self.nonce)})
@@ -83,10 +122,10 @@ class Block:
     @staticmethod
     def genesis_block():
         return Block(0, datetime.now(), "create genesis block lol (like the terminator movie)", "")
-        
-blockchain = Blockchain()
+  
+blockchain = Blockchain(global_chain)
 prev_block = blockchain.chain[0]
-blockchain.add_new_data("among us impostor")
+#blockchain.add_new_data("among us impostor")
 
 #print(blockchain.unconfirmed_data)
 for i in blockchain.unconfirmed_data:
