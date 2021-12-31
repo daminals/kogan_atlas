@@ -2,7 +2,7 @@
 
 Atlas Blockchain Network
 
-# Features
+## Features
 
 Able to make post requests to the network and create blocks
 
