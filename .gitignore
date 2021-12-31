@@ -2,3 +2,4 @@ venv
 .history
 atlas_fbkey.json
 .env
+__pycache__

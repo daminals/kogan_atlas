@@ -15,13 +15,14 @@ cred = credentials.Certificate("atlas_fbkey.json")
 firebase_admin.initialize_app(cred, {
     'databaseURL': FIREBASE
 })
-global_chain = db.reference('/')
+GLOBAL_CHAIN = db.reference('/')
 
 class Blockchain:
     difficulty = 4
     
     def __init__(self, global_chain=None):
         self.unconfirmed_data = []
+        self.global_chain=global_chain
         if global_chain:
             self.chain = self.convert_firebase_to_chain(global_chain)
         else:
@@ -53,6 +54,9 @@ class Blockchain:
             return False
         block.hash = proof
         self.chain.append(block)
+        if self.global_chain:
+            print(block.data_dict)
+            self.global_chain.update({block.index: block.data_dict()})
         return True
     
     def is_valid_proof(self, block, block_hash):
@@ -83,7 +87,8 @@ class Blockchain:
         blockchain_dict = {}
         for block in self.chain:
             blockchain_dict[block.index] = block.data_dict()
-        self.writeJSON(blockchain_dict, 'out.json')
+        self.writeJSON(blockchain_dict, 'chain.json')
+        return blockchain_dict
     
     def writeJSON(self, json_data, filename):
         with open(filename, 'w') as outfile:
@@ -123,13 +128,13 @@ class Block:
     def genesis_block():
         return Block(0, datetime.now(), "create genesis block lol (like the terminator movie)", "")
   
-blockchain = Blockchain(global_chain)
-prev_block = blockchain.chain[0]
-#blockchain.add_new_data("among us impostor")
+#blockchain = Blockchain(GLOBAL_CHAIN)
+#prev_block = blockchain.chain[0]
+#blockchain.add_new_data("new chain element")
 
 #print(blockchain.unconfirmed_data)
-for i in blockchain.unconfirmed_data:
-    blockchain.mine()
+#for i in blockchain.unconfirmed_data:
+#    blockchain.mine()
 
-blockchain.print()
+#blockchain.print()
 
