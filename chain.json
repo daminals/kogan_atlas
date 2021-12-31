@@ -1,0 +1,42 @@
+{
+    "0": {
+        "data": "create genesis block lol (like the terminator movie)",
+        "hash": "bbfa7274e0d4d6e1aeb4d0a4a1343865ef0f3aa7e50f14c1c37fa99dd162aa99",
+        "index": "0",
+        "nonce": "0",
+        "prev_hash": "",
+        "timestamp": "2021-12-30 16:07:29.335994"
+    },
+    "1": {
+        "data": "among us impostor",
+        "hash": "0000eee968109cca4af2339bc67600da2a6dafd60c14d731961a23ab99718cb2",
+        "index": "1",
+        "nonce": "70580",
+        "prev_hash": "bbfa7274e0d4d6e1aeb4d0a4a1343865ef0f3aa7e50f14c1c37fa99dd162aa99",
+        "timestamp": "2021-12-30 16:07:29.336071"
+    },
+    "2": {
+        "data": "new chain element",
+        "hash": "00009ee1cfaf854cc9bbbef5ffd39ad69d7eb259b717a08045a09b6ef44fff27",
+        "index": "2",
+        "nonce": "53477",
+        "prev_hash": "0000eee968109cca4af2339bc67600da2a6dafd60c14d731961a23ab99718cb2",
+        "timestamp": "2021-12-31 13:28:04.889846"
+    },
+    "3": {
+        "data": "i just made the first post request to the blockchain",
+        "hash": "00001ed1409fc285d8e066288cbb549c3d90f3b8c8ce92cca2feb6509e79d2ac",
+        "index": "3",
+        "nonce": "3087",
+        "prev_hash": "00009ee1cfaf854cc9bbbef5ffd39ad69d7eb259b717a08045a09b6ef44fff27",
+        "timestamp": "2021-12-31 14:08:19.179901"
+    },
+    "4": {
+        "data": "i just made the 3rd post request to the blockchain",
+        "hash": "0000e6cb33aecfdd5b0b05ba1d9e50c497d4a13f5e202280db2a608487647e72",
+        "index": "4",
+        "nonce": "24129",
+        "prev_hash": "00001ed1409fc285d8e066288cbb549c3d90f3b8c8ce92cca2feb6509e79d2ac",
+        "timestamp": "2021-12-31 14:19:42.287955"
+    }
+}
