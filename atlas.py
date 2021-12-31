@@ -22,9 +22,9 @@ class Blockchain:
     
     def __init__(self, global_chain=None):
         self.unconfirmed_data = []
-        self.global_chain=global_chain
         if global_chain:
             self.chain = self.convert_firebase_to_chain(global_chain)
+            self.global_chain = global_chain
         else:
             self.chain = [Block.genesis_block()]
         
@@ -57,7 +57,6 @@ class Blockchain:
         if self.global_chain:
             print(block.data_dict)
             self.global_chain.update({block.index: block.data_dict()})
-        return True
     
     def is_valid_proof(self, block, block_hash):
         return (block_hash.startswith('0' * Blockchain.difficulty) and block_hash == block.hash_block())
@@ -118,6 +117,9 @@ class Block:
     
     def data_dict(self):
         return {'index': str(self.index), 'timestamp': str(self.timestamp), 'hash': str(self.hash), 'data': str(self.data), 'prev_hash': str(self.prev_hash), 'nonce': str(self.nonce)}
+    
+    def to_json(self):
+        return json.dumps(self.data_dict())
     
     def print(self): # print out block data
         block_data = self.data_dict()

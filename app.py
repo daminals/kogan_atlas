@@ -28,8 +28,13 @@ def main():
 @app.route('/chain', methods=['GET','POST'])
 def network():
     if request.method == "POST":
-        json_data = request.json
+        if not request.is_json:
+            return 'not a json object. Please try again with request in format {\'data\': \'your block data\'}'
+        json_data = request.get_json()
         BLOCKCHAIN.add_new_data(json_data['data'])
+        BLOCKCHAIN.mine()
+        BLOCKCHAIN.to_json()
+        return BLOCKCHAIN.chain[-1].to_json()
     return BLOCKCHAIN.to_json()
 
 if __name__ == '__main__':
