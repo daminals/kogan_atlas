@@ -116,7 +116,7 @@ class Block:
         return block_encryption.hexdigest()
     
     def data_dict(self):
-        return {'index': str(self.index), 'timestamp': str(self.timestamp), 'hash': str(self.hash), 'data': str(self.data), 'prev_hash': str(self.prev_hash), 'nonce': str(self.nonce)}
+        return {'index': str(self.index), 'timestamp': str(self.timestamp), 'hash': str(self.hash), 'data': self.data, 'prev_hash': str(self.prev_hash), 'nonce': str(self.nonce)}
     
     def to_json(self):
         return json.dumps(self.data_dict())
