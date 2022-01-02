@@ -8,14 +8,16 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 def create_wallet():
-    pass
+    chars = string.ascii_uppercase + string.digits + string.ascii_lowercase + string.punctuation
+    return ''.join(random.choice(chars) for _ in range(65))
 
 class Wallet:
     length = 20
     def __init__(self, private=None):
         if private:
             self.private
-            self.public 
             
     def func(self):
         pass
+
+print(create_wallet())

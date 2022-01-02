@@ -12,7 +12,7 @@ with open("icon/kogan-atlas.png", "rb") as NFT_data:
     print(imagestr)
 
 stringified_image = imagestr.decode('utf-8')
-full_data = {'data': 'hey amongus', 'owner': 'daniel lmao', 'amongus': 'amongus'}
+full_data = {'data': 'hey amongus', 'owner': 'daniel lmao', 'to': None}
 post_data = json.dumps({'data': full_data})
 headers = {"Content-Type": 'application/json', 'username': 'daniel'}
 
