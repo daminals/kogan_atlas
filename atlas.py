@@ -110,7 +110,7 @@ class Block:
         else:
             self.hash = self.hash_block()
     
-    def hash_block(self):
+    def hash_block(self): # TODO: move hashing function to rust for faster speed
         protected_data = json.dumps({'index': str(self.index), 'timestamp': str(self.timestamp), 'data': str(self.data), 'prev_hash': str(self.prev_hash), 'nonce': str(self.nonce)})
         block_encryption = hashlib.sha256(protected_data.encode())
         return block_encryption.hexdigest()
