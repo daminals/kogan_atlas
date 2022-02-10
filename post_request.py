@@ -7,7 +7,6 @@ url = 'http://192.168.0.102:5000/chain'
 
 #creating an NFT
 with open("icon/kogan-atlas.png", "rb") as NFT_data:
-    #imagestr = NFT_data.read()
     imagestr = base64.b64encode(NFT_data.read())
     print(imagestr)
 

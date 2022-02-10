@@ -3,3 +3,9 @@ venv
 atlas_fbkey.json
 .env
 __pycache__
+wallet1.txt
+wallet2.txt
+
+# Added by cargo
+
+/target
